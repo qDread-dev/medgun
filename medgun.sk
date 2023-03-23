@@ -14,9 +14,6 @@ on right click with shears:
             send target entity of player
             set {_target} to target entity of player
             # Check if target is not CI at some point lmao
-            # if {_target} is not a player:
-                #     send "not a player"
-                #     exit
                 # Check if target is healing already
             if {bondedPlayers::*} contains {_target}:
                 send "target already bound by other player"
@@ -27,6 +24,11 @@ on right click with shears:
             set lore of player's tool to "Bonded to %{healgun.%player%.bondedTo}%"
             set {bonded.%player%} to true
             while {bonded.%player%} is true:
+                if distance between player's location and {_target}'s location is greater than 20:
+                    send "The bond with %{_target}% is broken"
+                    set {bonded.%player%} to false
+                    delete {healgun.%player%.bondedTo}
+                    exit
                 wait 1 second
                 heal {_target} by 0.5 hearts
             delete {_target}
@@ -56,3 +58,6 @@ command listBound:
         loop {bondedPlayers::*}:
             send "%loop-value%"
 
+command distanceToPlayer <player>:
+    trigger:
+        send distance between player's location and arg-1's location

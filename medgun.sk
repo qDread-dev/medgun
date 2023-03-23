@@ -1,10 +1,16 @@
 # salmon
 
 # Made by qDread for dangerzone.minehut.gg
+
+# TODO:
+# Auto unbind players on death
+# Add range
+
+
 on right click with shears:
     if name of event-item is "heal gun 2":
         
-        if target entity is set:
+        if target entity is a player:
             send target entity of player
             set {_target} to target entity of player
             # Check if target is not CI at some point lmao
@@ -27,11 +33,15 @@ on right click with shears:
                         
 on left click with shears:
     if name of event-item is "heal gun 2":
-        set {healgun.bonded.%player%} to false
+        set {bonded.%player%} to false
         remove {healgun.%player%.bondedTo} from {bondedPlayers::*}
         send "no longer bound to %{healgun.%player%.bondedTo}%"
         set lore of player's tool to "Not Bound"
+        delete {healgun.%player%.bondedTo}
         wait 5 seconds
+
+# The stuff below is just for testing, not needed but might be useful
+
 
 command giveheal:
     trigger:

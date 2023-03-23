@@ -11,7 +11,8 @@ on right click with shears:
     if name of event-item is "heal gun 2":
         
         if target entity is a player:
-            send target entity of player
+            if {bonded.%player%} is true:
+                exit
             set {_target} to target entity of player
             # Check if target is not CI at some point lmao
                 # Check if target is healing already
@@ -19,6 +20,7 @@ on right click with shears:
                 send "target already bound by other player"
                 wait 5 seconds
                 exit
+            send "bonded to %{_target}%"
             add {_target} to {bondedPlayers::*}
             set {healgun.%player%.bondedTo} to {_target}
             set line 1 of lore of player's tool to "Bonded to %{healgun.%player%.bondedTo}%"
@@ -36,9 +38,11 @@ on right click with shears:
                         
 on left click with shears:
     if name of event-item is "heal gun 2":
+        if {healgun.%player%.bondedTo} is not set:
+            exit
         set {bonded.%player%} to false
         remove {healgun.%player%.bondedTo} from {bondedPlayers::*}
-        send "no longer bound to %{healgun.%player%.bondedTo}%"
+        send "no longer bound to %{healgun.%player%.bondedTo}%" to player
         set line 1 of lore of player's tool to "Not Bound"
         set line 2 of lore of player's tool to "Dangerzone, it just works"
         delete {healgun.%player%.bondedTo}

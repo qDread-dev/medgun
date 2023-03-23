@@ -1,0 +1,48 @@
+# salmon
+
+# Made by qDread for dangerzone.minehut.gg
+on right click with shears:
+    if name of event-item is "heal gun 2":
+        
+        if target entity is set:
+            send target entity of player
+            set {_target} to target entity of player
+            # Check if target is not CI at some point lmao
+            # if {_target} is not a player:
+                #     send "not a player"
+                #     exit
+                # Check if target is healing already
+            if {bondedPlayers::*} contains {_target}:
+                send "target already bound by other player"
+                wait 5 seconds
+                exit
+            add {_target} to {bondedPlayers::*}
+            set {healgun.%player%.bondedTo} to {_target}
+            set lore of player's tool to "Bonded to %{healgun.%player%.bondedTo}%"
+            set {bonded.%player%} to true
+            while {bonded.%player%} is true:
+                wait 1 second
+                heal {_target} by 0.5 hearts
+            delete {_target}
+                        
+on left click with shears:
+    if name of event-item is "heal gun 2":
+        set {healgun.bonded.%player%} to false
+        remove {healgun.%player%.bondedTo} from {bondedPlayers::*}
+        send "no longer bound to %{healgun.%player%.bondedTo}%"
+        set lore of player's tool to "Not Bound"
+        wait 5 seconds
+
+command giveheal:
+    trigger:
+        give shears named "heal gun 2" to player
+
+command clearlist:
+    trigger:
+        delete {bondedPlayers::*}
+
+command listBound:
+    trigger:
+        loop {bondedPlayers::*}:
+            send "%loop-value%"
+

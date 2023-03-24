@@ -1,12 +1,7 @@
 # salmon
 
 # Made by qDread for dangerzone.minehut.gg
-
-# TODO:
-# Auto unbind players on death
-# Add range
-
-
+# Please give credit
 on right click with shears:
     if name of event-item is "heal gun 2":
         

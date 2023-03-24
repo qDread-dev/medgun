@@ -18,8 +18,8 @@ on right click with shears:
             send "bonded to %{_target}%"
             add {_target} to {bondedPlayers::*}
             set {healgun.%player%.bondedTo} to {_target}
-            set line 1 of lore of player's tool to "Bonded to %{healgun.%player%.bondedTo}%"
-            set line 2 of lore of player's tool to "Dangerzone, it just works"
+            set line 1 of lore of event-item to "Bonded to %{healgun.%player%.bondedTo}%"
+            set line 2 of lore of event-item to "Dangerzone, it just works"
             set {bonded.%player%} to true
             while {bonded.%player%} is true:
                 if distance between player's location and {_target}'s location is greater than 20:
@@ -38,8 +38,8 @@ on left click with shears:
         set {bonded.%player%} to false
         remove {healgun.%player%.bondedTo} from {bondedPlayers::*}
         send "no longer bound to %{healgun.%player%.bondedTo}%" to player
-        set line 1 of lore of player's tool to "Not Bound"
-        set line 2 of lore of player's tool to "Dangerzone, it just works"
+        set line 1 of lore of event-item to "Not Bound"
+        set line 2 of lore of event-item to "Dangerzone, it just works"
         delete {healgun.%player%.bondedTo}
         wait 5 seconds
 
